@@ -59,6 +59,8 @@ Puis on change le fichier `babel.config.js` [solution](https://stackoverflow.com
 
 Pour récupérer les images on crée un fichier `Icon.js` qui contient un Json avec les bon require.  
 
+On utilise le parcourt d'une map pour afficher les previsions. Mets en async l’affichage des prévisions pour ne pas avoir un tableau vide.  
+
 
 &nbsp;
 ## Apk
