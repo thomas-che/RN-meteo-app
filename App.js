@@ -1,12 +1,23 @@
 import react, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import { API_KEY } from '@env'
+import axios from 'axios';
+
+import CurrentWeather from './components/CurrentWeather';
+
+const API_URL = (lat, lon) => `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=fr&unit=metric`;
 
 export default function App() {
 
+    useEffect(()=>{
+        getCordinates();
+    }, [])
+
     // 1 - récupérer la loc du tel
 
-    const [location, setLocation] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState(null)
 
     const getCordinates = async () => {
         const {status} = await Location.requestForegroundPermissionsAsync();
@@ -16,28 +27,35 @@ export default function App() {
         }
 
         const userLocation = await Location.getCurrentPositionAsync();
-        setLocation(userLocation)
+        getWeather(userLocation)
     }
 
-    useEffect(()=>{
-        getCordinates();
-    }, [])
-
-
     // 2 - requête api 
+    const getWeather = async (location) => {
+        try {
+            const reponse = await axios.get(API_URL(location.coords.latitude, location.coords.longitude));
+
+            setData(reponse.data)
+
+            setLoading(false)
+        } catch (error) {
+            // ToDo : Afficher l'erreur au user
+            console.log("Erreur request : ", error);
+        }
+    }
     
 
-    if(!location) {
+    if(loading) {
         return (
             <View style={styles.container}>
-                <Text>Location is null...</Text>
+                <ActivityIndicator></ActivityIndicator>
             </View>
         )    
     }
 
     return (
         <View style={styles.container}>
-            <Text>{location.coords.latitude}</Text>
+            <CurrentWeather data={data}></CurrentWeather>
         </View>
     );
 }
@@ -45,7 +63,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#E2E6E1',
         alignItems: 'center',
         justifyContent: 'center',
     },

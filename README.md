@@ -49,6 +49,15 @@ expo install expo-location
 
 On demande l'autorisation d’accès à la localisation, puis on la met dans un state.  
 
+On install [react-native-dotenv](https://bestofreactjs.com/repo/zetachang-react-native-dotenv-react-native-system) pour mettre nos clef dans un fichier `.env`.
+```bash
+npm install react-native-dotenv
+npm install metro-react-native-babel-preset
+```
+
+Puis on change le fichier `babel.config.js` [solution](https://stackoverflow.com/questions/64225453/unknown-option-error-from-babel-in-react-native-app).  
+
+Pour récupérer les images on crée un fichier `Icon.js` qui contient un Json avec les bon require.  
 
 
 &nbsp;
