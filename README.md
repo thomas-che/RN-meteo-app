@@ -11,6 +11,7 @@ Suivi du tuto de la [PlayList YouTube](https://youtu.be/jte3AQRPj_8).
 Table des matières.
 > * [Utilisation](#Utilisation)
 > * [Initialisation](#Initialisation)
+> * [Développement](#Développement)
 > * [Apk](#Apk)
 > * [Idée](#Idée)
 
@@ -20,7 +21,8 @@ Table des matières.
 ---
 
 ```bash
-expo init meteo-app # blank
+npm install
+expo start
 ```
 
 
@@ -32,6 +34,21 @@ Cree l'app
 ```bash
 expo init meteo-app # blank
 ```
+
+
+&nbsp;
+## Initialisation
+---
+
+Install de la lib [Axios](https://github.com/qiangmao/axios) pour faire les requête API. Ainsi que [Date-fns](https://github.com/date-fns/date-fns) pour manipuler les dates. Et enfin [expo-location](https://docs.expo.dev/versions/latest/sdk/location/) pour récupérer la loc du telephone.  
+```bash
+npm i react-native-axios
+npm install date-fns
+expo install expo-location
+```
+
+On demande l'autorisation d’accès à la localisation, puis on la met dans un state.  
+
 
 
 &nbsp;
