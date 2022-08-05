@@ -27,7 +27,20 @@ export default function Forecasts({data}) {
         })
 
         // logique pour gouger les elements 
-        await setForecasts(forecastsData)
+
+        // 
+        let newForecastsData = forecastsData.map(forecast => {
+            return forecast.name
+        }).filter((day, index, self) => {
+            return self.indexOf(day) === index
+        }).map((day) => {
+            return {
+                day: day,
+                data: forecastsData.filter((forecast) => forecast.name === day)
+            }
+        })
+
+        await setForecasts(newForecastsData)
     }
 
     return (
@@ -38,8 +51,10 @@ export default function Forecasts({data}) {
         >
             {forecasts.map(f => (
                 <View>
-                    <Text style={styles.name}>{f.name}</Text>
-                    <Weather forecast={f}></Weather>
+                    <Text style={styles.day}>{f.day.toUpperCase()}</Text>
+                    <View style={styles.container}>
+                        {f.data.map( w => <Weather forecast={w}></Weather>)}
+                    </View>
                 </View>
             ))}
 
@@ -54,8 +69,16 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "35%"
     },
-    name:{
-
+    day:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        marginLeft: 15,
         color : COLOR,
+    },
+    container: {
+        flexDirection: 'row',
+        marginLeft: 15,
+        marginRight: 15,
     }
 });

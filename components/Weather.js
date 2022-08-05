@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     hour: {
-
+        color : COLOR,
     },
     icon: {
         width: 50,
