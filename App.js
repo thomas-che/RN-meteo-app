@@ -1,5 +1,5 @@
 import react, {useEffect, useState} from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
 import * as Location from 'expo-location';
 import { API_KEY } from '@env'
 import axios from 'axios';
@@ -56,6 +56,12 @@ export default function App() {
 
     return (
         <View style={styles.container}>
+            < StatusBar
+                animated={true}
+                backgroundColor="#E2E6E1"
+                barStyle='dark-content'
+                showHideTransition='fade'
+                hidden={false} />
             <CurrentWeather data={data}></CurrentWeather>
             <Forecasts data={data}></Forecasts>
         </View>

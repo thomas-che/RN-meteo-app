@@ -12,7 +12,7 @@ Table des matières.
 > * [Utilisation](#Utilisation)
 > * [Initialisation](#Initialisation)
 > * [Développement](#Développement)
-> * [Apk](#Apk)
+> * [Crée Apk](#Crée-Apk)
 > * [Idée](#Idée)
 
 
@@ -20,17 +20,20 @@ Table des matières.
 ## Utilisation
 ---
 
+Pour lancer l'Appli on install les package, apres on lance notre émulateur et enfin on lance expo.  
 ```bash
 npm install
 expo start
 ```
+
+> Ne pas oublier de crée un fichier `.env` et d'ajouter la clef de l'API.  
 
 
 &nbsp;
 ## Initialisation
 ---
 
-Cree l'app
+Cree l'App.    
 ```bash
 expo init meteo-app # blank
 ```
@@ -63,7 +66,7 @@ On utilise le parcourt d'une map pour afficher les previsions. Mets en async l�
 
 
 &nbsp;
-## Apk
+## Crée Apk
 ---
 
 On fait un eject de l'application
@@ -73,9 +76,46 @@ cd .\android\
 .\gradlew clean
 ```
 
-Et apres on génère une clef, suivre le tuto [https://reactnative.dev/docs/signed-apk-android](https://reactnative.dev/docs/signed-apk-android).
+Et apres on génère une clef dans `android/app/`, suivre le tuto [https://reactnative.dev/docs/signed-apk-android](https://reactnative.dev/docs/signed-apk-android).
 ```bash
 keytool -genkeypair -v -storetype PKCS12 -keystore meteo-app-key.keystore -alias meteo-app -keyalg RSA -keysize 2048 -validity 10000
+```
+
+On ajoute dans `android/gradle.properties` on ajoute nos paramètres de clef.  
+```bash
+MYAPP_UPLOAD_STORE_FILE=meteo-app-key.keystore
+MYAPP_UPLOAD_KEY_ALIAS=meteo-app
+MYAPP_UPLOAD_STORE_PASSWORD=***
+MYAPP_UPLOAD_KEY_PASSWORD=***
+```
+
+Dans `android/app/build.grade` : la variable `enableSeparateBuildPerCPUArchitecture` prend **true** ainsi que la variable `universalApk`.  
+Et in ajoute une conf dans le l'objet `signingConfigs` : 
+```json
+release {
+    if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+        storeFile file(MYAPP_UPLOAD_STORE_FILE)
+        storePassword MYAPP_UPLOAD_STORE_PASSWORD
+        keyAlias MYAPP_UPLOAD_KEY_ALIAS
+        keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+    }
+}
+```
+Et pour finir on change la conf dans `buildTypes.release.signingConfig` prend notre nouvelle conf : **signingConfigs.release**.  
+
+Modifier dans le `app.json` le "name" de notre application. Et aussi dans `android/app/src/main/res/values/strings.xml`.  
+
+Changer nos images dans `/assets/`. Puis apres on change les images de l'app grace à [https://appicon.co/](https://appicon.co/) puis on remplace les dossiers d'ici `android/app/src/main/res/`.  
+
+> **Warning**  
+> Si une erreur avec `AAPT: error: resource mipmap/ic_launcher` alors ouvrir le projet avec Android Studio.  
+> Dans `app/res/` on fait un New > Image Asset, on positionne bien notre image puis Next, et on choisi comme `Res Directory` : **release** puis Finish.
+
+
+Et enfin lancer le build, le résultat sera dans `android/app/build/outputs/apk/release` on prend `app-universal-release.apk`.  
+```bash
+cd .\android\
+./gradlew clean
 ./gradlew assembleRelease
 ```
 
@@ -87,3 +127,4 @@ keytool -genkeypair -v -storetype PKCS12 -keystore meteo-app-key.keystore -alias
 - Une page de réglage :
   - Changer de loc (Google Api : Place Autocomplete)
   - Mettre en place des notifications à une heure précise le matin avec la prévision de la journée
+  - Voir prévision pluie sur la journée
