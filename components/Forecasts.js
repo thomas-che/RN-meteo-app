@@ -50,10 +50,10 @@ export default function Forecasts({data}) {
             style={styles.scroll}
         >
             {forecasts.map(f => (
-                <View>
+                <View key={forecasts.indexOf(f)}>
                     <Text style={styles.day}>{f.day.toUpperCase()}</Text>
                     <View style={styles.container}>
-                        {f.data.map( w => <Weather forecast={w}></Weather>)}
+                        {f.data.map( w => <Weather forecast={w} key={'k'+f.data.indexOf(w)}></Weather>)}
                     </View>
                 </View>
             ))}
