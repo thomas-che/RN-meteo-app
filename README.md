@@ -64,6 +64,25 @@ Pour récupérer les images on crée un fichier `Icon.js` qui contient un Json a
 
 On utilise le parcourt d'une map pour afficher les previsions. Mets en async l’affichage des prévisions pour ne pas avoir un tableau vide.  
 
+Installation de Drawer de [react-navigation](https://reactnavigation.org/docs/drawer-navigator)
+```bash
+npm install @react-navigation/native
+expo install react-native-screens react-native-safe-area-context
+npm install @react-navigation/drawer
+npm install react-native-gesture-handler react-native-reanimated  
+expo doctor --fix-dependencies  
+```
+
+Patch erreur 'calling synchronous methods on native modules is not supported in chrome' [grace à](https://stackoverflow.com/questions/61067004/invariant-violation-calling-synchronous-methods-on-native-modules-is-not-suppor)
+
+Install un package pour les icons [fontAwesome](https://www.npmjs.com/package/@fortawesome/react-native-fontawesome)
+```bash
+ npm i --save react-native-svg 
+ npm i --save @fortawesome/fontawesome-svg-core
+ npm i --save @fortawesome/free-solid-svg-icons
+ npm i --save @fortawesome/react-native-fontawesome
+```
+
 
 &nbsp;
 ## Crée Apk
@@ -72,8 +91,7 @@ On utilise le parcourt d'une map pour afficher les previsions. Mets en async l�
 On fait un eject de l'application
 ```bash
 npm run eject
-cd .\android\
-.\gradlew clean
+cd android/; ./gradlew clean; cd ..
 ```
 
 Et apres on génère une clef dans `android/app/`, suivre le tuto [https://reactnative.dev/docs/signed-apk-android](https://reactnative.dev/docs/signed-apk-android).
@@ -126,7 +144,8 @@ cd .\android\
 
 - Une page de réglage :
   - OK - Mettre à jour les previsions et afficher la dateTime de l'appel de la requête
-  - Engrenage en haut à droite, ouvre une page de setting pour afficher nos options
+  - DrawerNavigation ouvre une page de setting pour afficher nos options
+  - En bas du DrawerNavigation afficher la date de mise à jour
   - Mettre en place des notifications à une heure précise le matin avec la prévision de la journée
   - Changer de loc (Google Api : Place Autocomplete)
   - Voir prévision pluie sur la journée

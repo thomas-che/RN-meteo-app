@@ -67,7 +67,8 @@ const COLOR = '#54565B';
 const styles = StyleSheet.create({
     scroll:{
         width: "100%",
-        height: "35%"
+        height: "35%",
+        marginTop: '10%',
     },
     day:{
         fontSize: 16,

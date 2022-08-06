@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         height: "65%",
     },
     city: {
-        marginTop: 20,
+        marginTop: '15%',
         fontSize: 36,
         fontWeight: '500',
         color : COLOR,
