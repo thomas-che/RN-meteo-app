@@ -91,7 +91,7 @@ MYAPP_UPLOAD_KEY_PASSWORD=***
 
 Dans `android/app/build.grade` : la variable `enableSeparateBuildPerCPUArchitecture` prend **true** ainsi que la variable `universalApk`.  
 Et in ajoute une conf dans le l'objet `signingConfigs` : 
-```json
+```bash
 release {
     if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
         storeFile file(MYAPP_UPLOAD_STORE_FILE)
@@ -125,6 +125,8 @@ cd .\android\
 ---
 
 - Une page de réglage :
-  - Changer de loc (Google Api : Place Autocomplete)
+  - OK - Mettre à jour les previsions et afficher la dateTime de l'appel de la requête
+  - Engrenage en haut à droite, ouvre une page de setting pour afficher nos options
   - Mettre en place des notifications à une heure précise le matin avec la prévision de la journée
+  - Changer de loc (Google Api : Place Autocomplete)
   - Voir prévision pluie sur la journée

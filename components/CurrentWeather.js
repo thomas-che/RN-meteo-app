@@ -1,6 +1,7 @@
 import react, {useEffect, useState} from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
-import { isSameDay } from 'date-fns';
+import { isSameDay, format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import Icon from './Icon';
 
 
@@ -9,10 +10,12 @@ export default function CurrentWeather({data}) {
 
     useEffect(() => {
         traitement(data)
+        setDateRefresh(new Date().getTime() + Math.abs(data.city.timezone * 1000))
     }, [data])
 
     const [currentWeather, setCurrentWeather] = useState(null)
     const [currentIcon, setCurrentIcon] = useState(Icon['00n'])
+    const [dateRefresh, setDateRefresh] = useState(new Date().getTime() + Math.abs(data.city.timezone * 1000))
 
     const traitement = (data) => {
         const curentW = data.list.filter(forecast => {
@@ -27,6 +30,7 @@ export default function CurrentWeather({data}) {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.dateRefresh}>updated {format(dateRefresh, 'dd/MM/yyyy HH:mm:ss',  {locale: fr})}</Text>
             <Text style={styles.city}>{data?.city?.name}</Text>
             <Text style={styles.today}>Aujourd'hui</Text>
 
@@ -45,11 +49,12 @@ const COLOR = '#54565B';
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 60,
+        marginTop: 0,
         alignItems: 'center',
         height: "65%",
     },
     city: {
+        marginTop: 20,
         fontSize: 36,
         fontWeight: '500',
         color : COLOR,
@@ -73,5 +78,10 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color : COLOR,
+    },
+    dateRefresh: {
+        top: 0,
+        fontSize: 8,
+        color: COLOR
     }
 });
